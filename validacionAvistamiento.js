@@ -46,9 +46,9 @@ form.addEventListener("submit", function (evento) {
         const fechaIngresada = new Date(fechaValor);
         const ahora = new Date();
 
-        // Fecha máxima en el pasado (5 años atrás)
+        // Fecha máxima en el pasado (30 dias)
         const limitePasado = new Date();
-        limitePasado.setDate(ahora.getDate - 30);
+        limitePasado.setDate(ahora.getDate() - 30);
 
         if (fechaIngresada > ahora) {
         errorFecha.textContent = "La fecha no puede estar en el futuro.";
