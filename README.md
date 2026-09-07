@@ -1,6 +1,9 @@
-# Tarea-1
+# Tarea 1
 
-## Paginas del sitio:
+> [!NOTE]
+> Se utilizó CSS en los mismos archivos HTML dentro de las etiquetas `<style>`, y JavaScript en archivos separados.
+
+## Páginas del sitio:
 - Portada (`index.html`): Menú de navegación accesible hacia las distintas secciones del sistema.
 - Registro de Voluntarios (`registroVoluntario.html`): Formulario de registro de usuario.
 - Informar Avistamiento (`informarAvistamiento.html`): Formulario para ingresar reportes de aves.
@@ -19,4 +22,3 @@
 │   └── img/ (se utilizaron imagenes con marca de agua para las aves registradas)
 └── estadisticas.html
     └── estadisticas.js
-
