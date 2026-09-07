@@ -8,7 +8,7 @@
 - Registro de Voluntarios (`registroVoluntario.html`): Formulario de registro de usuario.
 - Informar Avistamiento (`informarAvistamiento.html`): Formulario para ingresar reportes de aves.
 - Listado de Avistamientos (`listadoAvistamiento.html`): Tabla interactiva con los datos de las aves.
-- Estadísticas (`estadisticas.html`): Visualización de métricas y gráficos.
+- Estadísticas (`estadisticas.html`): Visualización de métricas y gráficos. (las métricas y gráficos no tienen relación con los datos del listado de avistamiento)
 
 ## Estructura de la tarea
 ```text
