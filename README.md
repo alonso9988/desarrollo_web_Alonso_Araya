@@ -16,8 +16,7 @@
 │   └── validacionAvistamiento.js
 ├── listadoAvistamiento.html
 │   ├── listadoAvistamientos.js
-│   └── img/
+│   └── img/ (se utilizaron imagenes con marca de agua para las aves registradas)
 └── estadisticas.html
     └── estadisticas.js
 
-#se utilizaron imagenes con marca de agua para las aves registradas
