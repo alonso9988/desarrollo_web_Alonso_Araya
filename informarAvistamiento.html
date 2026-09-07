@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Informar Avistamiento</title>
+
+<!-- CSS -->
+<style>
+header {text-align: center;}
+form {display: grid; grid-template-columns: 1fr 1fr; gap: 20px; padding: 0 90px;}
+label {display: flex; flex-direction: column;}
+input[type = "submit"] {justify-self: center; grid-column: span 2;}
+.mensaje-error { color: crimson;}
+</style>
+
+</head>
+
+<body>
+    <header>
+            <h1>
+                Informar avistamiento
+            </h1>
+    </header>
+
+    <form id="informarAvistamiento" novalidate>
+        <label for="tipo">Tipo:<br>
+            <input type="text" id="tipo" name="tipo"><br>
+            <span class="mensaje-error" id="error-tipo"></span> 
+        </label>
+
+        <label for="nombre">Nombre:<br>
+            <input type="text" id="nombre" name="nombre"><br>
+            <span class="mensaje-error" id="error-nombre"></span>
+        </label>
+        
+        <label for="lugar">Lugar:<br>
+            <input type="text" id="lugar" name="lugar"><br>
+            <span class="mensaje-error" id="error-lugar"></span>
+        </label>
+
+        <label for="fecha_hora">Fecha y Hora:<br>
+            <input type="datetime-local" id="fecha_hora" name="fecha_hora"><br>
+            <span class="mensaje-error" id="error-fecha"></span>
+        </label>
+
+        <label for="archivo">Foto o Video:<br>
+            <input type="file" id="archivo" name="archivo" accept="image/*,video/*"><br>
+            <span class="mensaje-error" id="error-archivo"></span>
+        </label>
+
+        <input type="submit" value="Enviar avistamiento">
+    </form>
+
+    <script 
+        src="validacionAvistamiento.js">
+    </script>
+</body>
+
+
+</html>

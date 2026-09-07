@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Avistamientos</title>
+
+<!-- CSS -->
+<style>
+header {text-align: left;}
+form {display: flex; gap: 0.5rem; align-items: center;}
+label {display: flex; flex-direction: row; gap: 0.35rem;}
+#tiposAves {flex-grow: 1;}
+section{min-width: 260px;}
+table {width: 100%; border-collapse: collapse; margin-top: 1rem;}
+th, td {border: 1px solid #ccc;padding: 8px 12px;text-align: left;}
+caption {font-size: 1.5rem; font-weight: bold; margin-bottom: 0.5rem;}
+</style>
+</head>
+
+<body>
+    <header>
+            <h1>
+                Avistamientos Registrados
+            </h1>
+    </header>
+    <form>
+        <section>
+            <label for="tiposAves">Tipo de Ave:
+                <select id="tiposAves">
+                    <option value="todos">Todos</option>
+                    <option value="Rapaces">Rapaces</option>
+                    <option value="Pájaros">Pájaros</option>
+                    <option value="Zancudas">Zancudas</option>
+                    <option value="Acuáticas">Acuáticas</option>
+                    <option value="Gallináceas">Gallináceas</option>
+                </select>
+            </label>
+        </section>
+
+        <section>
+            <label for="ordenar">Ordenar por:
+            <select id="ordenar">
+                <option value="fechaDesc">Fecha (más reciente primero)</option>
+                <option value="fechaAsc">Fecha (más antigua primero)</option>
+                <option value="lugarAsc">Lugar (A - Z)</option>
+                <option value="lugarDesc">Lugar (Z - A)</option>  
+            </select>
+            </label>
+        </section>
+    </form>
+
+    <section>
+            <table>
+                <caption> Registro de aves </caption>
+                <thead>
+                    <tr>
+                        <th>Especie</th>
+                        <th>Tipo</th>
+                        <th>Foto/Video</th>
+                        <th>Lugar</th>
+                        <th>Fecha y Hora</th>
+                    </tr>
+                </thead>
+                <tbody id="tabla"></tbody>
+            </table>
+
+        <nav>
+            <button type="button" id="anterior">Anterior</button>
+            <span id="numeroDePagina"></span>
+            <button type="button" id="siguiente">Siguiente</button>
+        </nav>
+    </section>
+
+<script src="listadoAvistamientos.js"></script>
+</body>
+</html>

@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro Voluntario</title>
+
+<!-- CSS -->
+<style>
+    header {text-align: center;}
+    form {display: grid; grid-template-columns: 1fr 1fr; gap: 20px; padding: 0 90px;}
+    label {display: flex; flex-direction: column;}
+    input[type = "submit"] {justify-self: center; grid-column: span 2;}
+    .mensaje-error {color:crimson;}
+</style>
+</head>
+
+<body>
+    <header>
+            <h1>
+                Registro voluntario
+            </h1>
+    </header>
+
+    <form id="registroVoluntario" novalidate>
+        <label for="nombre">Nombre:<br>
+            <input type="text" id="nombre" name="nombre"> <br> 
+            <span class="mensaje-error" id="error-nombre"></span>
+        </label>
+
+        <label for="rut">Rut: <br>
+            <input type="text" id="rut" name="rut"> <br>
+            <span class="mensaje-error" id="error-rut"></span>
+        </label>
+        
+        <label for="email">Email: <br>
+            <input type="email" id="email" name="email"> <br>
+            <span class="mensaje-error" id="error-email"></span>
+        </label>
+
+        <label for="telefono">Teléfono: <br>
+            <input type="tel" id="telefono" name="telefono"> <br>
+            <span class="mensaje-error" id="error-telefono"></span>
+        </label>
+
+        <label for="region">Región:<br>
+            <input type="text" id="region" name="region"> <br>
+            <span class="mensaje-error" id="error-region"></span>
+        </label>
+
+        <label for="comuna">Comuna: <br>
+            <input type="text" id="comuna" name="comuna"> <br>
+            <span class="mensaje-error" id="error-comuna"></span>
+        </label>
+
+        <label for="calle">Calle: <br>
+            <input type="text" id="calle" name="calle"> <br>
+            <span class="mensaje-error" id="error-calle"></span>
+        </label>
+
+        <label for="numero">Número: <br>
+            <input type="number" id="numero" name="numero"> <br>
+            <span class="mensaje-error" id="error-numero"></span>
+        </label>
+    
+        <input type="submit" value="Registrarme">
+    </form>
+
+    <script 
+        src="validacionRegistro.js">
+    </script>
+</body>
+
+
+</html>

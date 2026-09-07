@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Estadísticas</title>
+  
+<!-- CSS -->  
+<style>
+    body { font-family: sans-serif; text-align: center; margin: 20px;}
+    .metricas {display: flex; justify-content: center; gap: 20px; margin-bottom: 30px;}
+    .caja p {font-size: 1.8rem;}
+    .graficos {display: flex; justify-content: center; gap: 20px;}
+    figure {margin: 0;}
+    figcaption {font-weight: bold;}
+    canvas {border: 1px solid #000000;}
+</style>
+</head>
+<body>
+
+  <header>
+    <h1>Estadísticas del Sistema</h1>
+  </header>
+
+    <section class="metricas">
+        <h2 style="display: none;">Graficos1</h2>
+        <article class="caja">
+            <h3>Voluntarios</h3>
+            <p id="total-voluntarios">5</p>
+        </article>
+        <article class="caja">
+            <h3>Avistamientos</h3>
+            <p id="total-avistamientos">4</p>
+        </article>
+        <article class="caja">
+            <h3>Regiones</h3>
+            <p id="total-regiones">3</p>
+        </article>
+    </section>
+
+    <section class="graficos">
+        <h2 style="display: none;">Gráficos2</h2>
+        <figure>
+            <figcaption>Aves por Tipo</figcaption>
+            <canvas id="graficoTipo" width="300" height="200"></canvas>
+        </figure>
+
+        <figure>
+            <figcaption>Avistamientos por Región</figcaption>
+            <canvas id="graficoRegiones" width="300" height="200"></canvas>
+        </figure>
+    </section>
+
+    <script src="estadisticas.js"></script>
+    
+</body>
+</html>
