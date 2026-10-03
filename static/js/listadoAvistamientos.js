@@ -1,4 +1,3 @@
-// Leer datos desde el HTML
 const nodos = document.querySelectorAll("#fuente-datos .dato-avistamiento");
 const avistamientos = Array.from(nodos).map(el => ({
     id: el.dataset.id,
@@ -38,7 +37,6 @@ function mostrarTabla() {
         return;
     }
 
-    // Tu for original (sin duplicar)
     for (let i = 0; i < corte.length; i++) {
         const ave = corte[i];
         const fila = document.createElement("tr");
