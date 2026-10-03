@@ -11,7 +11,7 @@ Tar2/
 │
 ├── app.py                     # Rutas de Flask 
 ├── models.py                  # Conexión SQLAlchemy y modelos de tablas
-├── requirements.txt           # Lista de dependencias (
+├── requirements.txt           # Lista de dependencias
 ├── schema.sql                 # Script SQL para crear las tablas y precargar aves, regiones y comunas
 ├── README.md                  
 │
