@@ -1,11 +1,12 @@
 # Tarea 2 - Alonso Araya
 
-pagina web para el registro y gestión de avistamientos de aves y voluntarios desarrollado con Python Flask, MySQL y JavaScript.
+Página web para el registro y gestión de avistamientos de aves y voluntarios desarrollado con Python Flask, MySQL y JavaScript.
 
-- **Backend:** Python 3, Flask, SQLAlchemy.
-- **Base de Datos:** MySQL.
-- **Frontend:** HTML5, CSS3 (dentro de cada html), JavaScript.
+* **Backend:** Python 3, Flask, SQLAlchemy.
+* **Base de Datos:** MySQL.
+* **Frontend:** HTML5, CSS3 (dentro de cada HTML), JavaScript.
 
+```text
 Tar2/
 │
 ├── app.py                     # Rutas de Flask (/, /voluntario, /avistamiento, etc.) y lógica del servidor
@@ -32,3 +33,4 @@ Tar2/
     └── uploads/                   # Archivos multimedia subidos (ej. .jpg, .mp4)
         ├── 1790985781_aguila.jpg
         └── 1790986051_albatrozoscuro.jpg
+```
