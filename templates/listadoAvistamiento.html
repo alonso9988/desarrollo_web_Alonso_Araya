@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Avistamientos</title>
+    <style>
+        header { text-align: left; }
+        form { display: flex; gap: 0.5rem; align-items: center; margin-bottom: 1rem; }
+        label { display: flex; flex-direction: row; gap: 0.35rem; }
+        section { min-width: 260px; }
+        table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+        th, td { border: 1px solid #ccc; padding: 8px 12px; text-align: left; }
+        caption { font-size: 1.5rem; font-weight: bold; margin-bottom: 0.5rem; }
+        tr:hover { background-color: #f2f2f2; }
+        .paginacion-controls { margin-top: 15px; display: flex; gap: 12px; align-items: center; }
+        button { cursor: pointer; padding: 6px 12px; }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>Avistamientos Registrados</h1>
+    </header>
+
+    <section>
+        <form onsubmit="return false;">
+            <label for="ordenar">Ordenar por:
+                <select id="ordenar">
+                    <option value="fechaDesc">Fecha (más reciente)</option>
+                    <option value="fechaAsc">Fecha (más antigua)</option>
+                    <option value="lugarAsc">Lugar (A-Z)</option>
+                    <option value="lugarDesc">Lugar (Z-A)</option>
+                </select>
+            </label>
+        </form>
+
+        <div id="fuente-datos" style="display: none;">
+            {% for a in avistamientos %}
+                <span class="dato-avistamiento"
+                      data-id="{{ a.id }}"
+                      data-especie="{{ a.ave.nombre if a.ave else 'Desconocida' }}"
+                      data-foto="{% if a.registros and a.registros|length > 0 %}/static/{{ a.registros[0].ruta_archivo }}{% else %}/static/img/default.jpg{% endif %}"
+                      data-lugar="{{ a.lugar }}"
+                      data-fecha="{{ a.fecha_hora.strftime('%Y-%m-%d %H:%M') if a.fecha_hora else '' }}"
+                      data-voluntario="{{ a.voluntario.nombre if a.voluntario else 'N/A' }}">
+                </span>
+            {% endfor %}
+        </div>
+
+        <table>
+            <caption>Registro de aves</caption>
+            <thead>
+                <tr>
+                    <th>Fecha y Hora</th>
+                    <th>Lugar</th>
+                    <th>Ave</th>
+                    <th>Voluntario</th>
+                    <th>Foto/Video</th>
+                </tr>
+            </thead>
+            <tbody id="tabla"></tbody>
+        </table>
+
+        <div class="paginacion-controls">
+            <button type="button" id="anterior">Anterior</button>
+            <span id="numeroDePagina">Página 1</span>
+            <button type="button" id="siguiente">Siguiente</button>
+        </div>
+    </section>
+
+    <p style="margin-top: 20px;"><a href="/">Volver al inicio</a></p>
+
+    <script src="/static/js/listadoAvistamientos.js"></script>
+</body>
+</html>

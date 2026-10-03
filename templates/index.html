@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UOCH</title>
+
+<!-- CSS -->
+<style>
+header {text-align: center;}
+main {font-size: 23px; text-decoration: underline; text-align: center;}
+a {line-height: 2;}
+table {margin: 20px auto; border-collapse: collapse; font-size: 16px;}
+th, td {border: 1px solid black; padding: 8px 12px;}
+</style>
+</head>
+
+
+<body>
+    <header>
+            <h1>
+                Unión de Ornitólogos de Chile
+            </h1>
+            <p>
+                Bienvenidos a la página de la Unión de Ornitólogos de Chile
+            </p>
+    </header>
+
+    <main>
+        <nav>
+            <a href="/voluntario">Registro Voluntario</a><br>
+            <a href="/avistamiento">Informar Avistamiento</a><br>
+            <a href="/lista_avistamientos">Listado de Avistamientos</a><br>
+            <a href="/estadisticas">Estadísticas</a>
+        </nav>
+
+        <h3>Últimos 2 Avistamientos</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Lugar </th>
+                    <th>Ave</th>
+                    <th>Fecha y Hora</th>
+                    <th>Voluntario</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for avistamiento in avistamientos %}
+                <tr>
+                    <td>{{ avistamiento.lugar }}     </td>
+                    <td>{{ avistamiento.ave.nombre }}</td>
+                    <td>{{ avistamiento.fecha_hora }}</td>
+                    <td>{{ avistamiento.voluntario.nombre }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </main>
+</body>
+
+</html>

@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Informar Avistamiento</title>
+
+<!-- CSS -->
+<style>
+header {text-align: center;}
+form {display: grid; grid-template-columns: 1fr 1fr; gap: 20px; padding: 0 90px;}
+label {display: flex; flex-direction: column;}
+input[type = "submit"] {justify-self: center; grid-column: span 2;}
+.mensaje-error { color: crimson;}
+</style>
+
+</head>
+
+<body>
+    <header>
+            <h1>
+                Informar avistamiento
+            </h1>
+    </header>
+
+
+    {% if error %}
+        <p>
+            Hubo un error al procesar el avistamiento. Revise los datos e intente nuevamente.
+        </p>
+    {% endif %}
+
+    {% if exito %}
+        <div style="text-align: center; border: 1px solid green; padding: 20px; margin: 20px;">
+            <h2 style="color: green;">¡Avistamiento registrado con éxito!</h2>
+            <p>Se ha guardado tu observación y archivos en el sistema.</p>
+            <a href="/avistamiento">Informar otro avistamiento</a> | 
+            <a href="/">Volver a la Portada</a>
+        </div>
+    {% else %}
+
+    <form id="informarAvistamiento" action="/avistamiento" method="POST" enctype="multipart/form-data" novalidate>
+
+        <label for="voluntario">Voluntario:<br>
+            <select id="voluntario" name="voluntario">
+                <option value="">Seleccione voluntario</option>
+                {% for voluntario in voluntarios %}
+                    <option value="{{ voluntario.id }}">{{ voluntario.nombre }}</option>
+                {% endfor %}
+            </select><br>
+            <span class="mensaje-error" id="error-voluntario"></span>
+        </label>
+
+        <label for="ave">Ave:<br>
+            <select id="ave" name="ave">
+                <option value="">Seleccione ave</option>
+                {% for ave in aves %}
+                    <option value="{{ ave.id }}">{{ ave.nombre }}</option>
+                {% endfor %}
+            </select><br>
+            <span class="mensaje-error" id="error-ave"></span>
+        </label>
+        
+        <label for="lugar">Lugar:<br>
+            <input type="text" id="lugar" name="lugar"><br>
+            <span class="mensaje-error" id="error-lugar"></span>
+        </label>
+
+        <label for="fecha_hora">Fecha y Hora:<br>
+            <input type="datetime-local" id="fecha_hora" name="fecha_hora"><br>
+            <span class="mensaje-error" id="error-fecha"></span>
+        </label>
+
+        <label for="archivo">Foto o Video:<br>
+            <input type="file" id="archivo" name="archivo" accept="image/*,video/*"><br>
+            <span class="mensaje-error" id="error-archivo"></span>
+        </label>
+
+        <input type="submit" value="Enviar avistamiento">
+    </form>
+    {% endif %}
+
+    <p style="text-align: center;"><a href="/">Volver al inicio</a></p>
+
+    <script 
+        src="/static/js/validacionAvistamiento.js">
+    </script>
+</body>
+
+</html>

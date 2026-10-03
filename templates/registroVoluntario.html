@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro Voluntario</title>
+
+<!-- CSS -->
+<style>
+    header {text-align: center;}
+    form {display: grid; grid-template-columns: 1fr 1fr; gap: 20px; padding: 0 90px;}
+    label {display: flex; flex-direction: column;}
+    input[type = "submit"] {justify-self: center; grid-column: span 2;}
+    .mensaje-error {color:crimson;}
+</style>
+</head>
+
+<body>
+    <header>
+            <h1>
+                Registro voluntario
+            </h1>
+
+    <!-- Alertas -->
+    {% if error%}
+            <p>Hubo un error en el registro. Por favor, inténtelo nuevamente.</p>
+    {% endif %}
+
+    {% if exito %}
+            <h2 style="color: green;">¡Voluntario registrado con éxito!</h2>
+            <p>Se ha guardado tu registro en el sistema.</p>
+            <a href="/avistamiento">Informar un Avistamiento</a> | 
+            <a href="/">Volver a la Portada</a>
+    {% else %}
+
+    <form id="registroVoluntario" action="/voluntario" method="POST" novalidate>
+        <label for="nombre">Nombre:<br>
+            <input type="text" id="nombre" name="nombre"> <br> 
+            <span class="mensaje-error" id="error-nombre"></span>
+        </label>
+
+        <label for="email">Email: <br>
+            <input type="email" id="email" name="email"> <br>
+            <span class="mensaje-error" id="error-email"></span>
+        </label>
+
+        <label for="telefono">Teléfono: <br>
+            <input type="tel" id="telefono" name="telefono"> <br>
+            <span class="mensaje-error" id="error-telefono"></span>
+        </label>
+
+        <label for="region">Región:<br>
+            <select id="region" name="region">
+                <option value="">Seleccione región</option>
+                {% for region in regiones %}
+                    <option value="{{ region.id }}">{{ region.nombre }}</option>
+                {% endfor %}
+            </select><br>
+            <span class="mensaje-error" id="error-region"></span>
+        </label>
+
+        <label for="comuna">Comuna:<br>
+            <select id="comuna" name="comuna_id">
+                <option value="">Seleccione comuna</option>
+                {% for comuna in comunas %}
+                    <option value="{{ comuna.id }}" data-region="{{ comuna.region_id }}">{{ comuna.nombre }}</option>
+                {% endfor %}
+            </select><br>
+            <span class="mensaje-error" id="error-comuna"></span>
+        </label>
+    
+        <input type="submit" value="Registrarme">
+    </form>
+    {% endif %}
+
+    <p style="text-align: center;"><a href="/">Volver al inicio</a></p>
+    
+    <script 
+        src="/static/js/validacionRegistro.js">
+    </script>
+</body>
+
+</html>

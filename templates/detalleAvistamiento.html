@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Detalle Avistamiento</title>
+</head>
+<body>
+    <h2>Detalle del Avistamiento</h2>
+
+    <p><b>Ave:</b> {{ avistamiento.ave.nombre }}</p>
+    <p><b>Fecha y Hora:</b> {{ avistamiento.fecha_hora }}</p>
+    <p><b>Lugar:</b> {{ avistamiento.lugar }}</p>
+    <p><b>Descripción:</b> {{ avistamiento.descripcion or 'Sin descripción' }}</p>
+
+    <hr>
+
+    <p><b>Voluntario:</b> {{ avistamiento.voluntario.nombre }}</p>
+    <p><b>Email:</b> {{ avistamiento.voluntario.email }}</p>
+    <p><b>Teléfono:</b> {{ avistamiento.voluntario.telefono or 'No registrado' }}</p>
+
+    <hr>
+
+    <h3>Archivos</h3>
+    {% for reg in avistamiento.registros %}
+        {% set ext = reg.ruta_archivo.split('.')[-1].lower() %}
+        {% if ext in ['mp4', 'mov', 'webm'] %}
+            <video src="{{ url_for('static', filename=reg.ruta_archivo) }}" controls width="250"></video>
+        {% else %}
+            <img src="{{ url_for('static', filename=reg.ruta_archivo) }}" alt="Foto avistamiento" width="250">
+        {% endif %}
+    {% endfor %}
+
+    <br><br>
+    <a href="/lista_avistamientos">Volver</a>
+</body>
+</html>
