@@ -43,7 +43,7 @@ if (form) {
         }
 
         // Validar Email 
-        const email = document.getElementById("email").value();
+        const email = document.getElementById("email").value().trim();
         const errorEmail = document.getElementById("error-email");
         const formatoEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         if (formatoEmail.test(email) == false) {
@@ -54,7 +54,7 @@ if (form) {
         }
 
         // Validar Teléfono 
-        const telefono = document.getElementById("telefono").value();
+        const telefono = document.getElementById("telefono").value().trim();
         const errorTelefono = document.getElementById("error-telefono");
         const formatoTelefono = /^(\+?56)?9\d{8}$/;
         if (formatoTelefono.test(telefono) == false) {
