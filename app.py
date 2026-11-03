@@ -1,8 +1,9 @@
 import os
 from datetime import datetime
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, jsonify, url_for
 from sqlalchemy.orm import scoped_session
-from models import SessionLocal, Avistamiento, Region, Comuna, Voluntario, Ave, Registro
+from models import SessionLocal, Avistamiento, Region, Comuna, Voluntario, Ave, Registro, Comentario
+from sqlalchemy import func
 
 app = Flask(__name__)
 app.secret_key = "s3cr3t_k3y"
@@ -101,7 +102,7 @@ def avistamiento():
     return render_template('informarAvistamiento.html', voluntarios=voluntarios, aves=aves)
 
 
-# Listado de avistamientos paginado (5 por página)
+# Listado de avistamientos paginado
 @app.route('/lista_avistamientos')
 def lista_avistamientos():
     avistamientos = db_session.query(Avistamiento)\
@@ -120,10 +121,123 @@ def detalle_avistamiento(id):
 
 # Estadísticas
 @app.route('/estadisticas')
-def estadisticas():
+def vista_estadisticas():
     return render_template('estadisticas.html')
+
+
+@app.route('/api/estadisticas')
+def obtener_estadisticas():
+    avistamientosTotales = db_session.query(Avistamiento).all() #obtencion de los datos
+
+    #Grafico de lineas
+    avistamientos_por_dia = {} #{fecha: numAvesDia}
+    for avistamiento in avistamientosTotales:
+        fecha_str = avistamiento.fecha_hora.strftime('%Y-%m-%d')
+        if fecha_str in avistamientos_por_dia:
+            avistamientos_por_dia[fecha_str] += 1
+        else:
+            avistamientos_por_dia[fecha_str] = 1
+
+    #eje X
+    dias = sorted(avistamientos_por_dia.keys()) #[dia1, dia2, dia3, ...]
+
+    #eje Y
+    cantidadAvistamientos = []
+    for dia in dias:
+        cantidadAvistamientos.append(avistamientos_por_dia[dia])  #[numAvesDia1, numAvesDia2, numAvesDia3, ...]
+
+
+    #Gráfico de torta
+    avistamientos_por_ave = {}
+    for avistamiento in avistamientosTotales:
+        nombre_ave = avistamiento.ave.nombre
+        if nombre_ave in avistamientos_por_ave:
+            avistamientos_por_ave[nombre_ave] += 1
+        else:
+            avistamientos_por_ave[nombre_ave] = 1 
+
+    datosTorta = []
+    for nombre_ave, cantidad in avistamientos_por_ave.items():
+        datosTorta.append({
+            "name": nombre_ave,
+            "y": cantidad
+        })
+
+    #Grafico de barras
+    voluntariosTotales = db_session.query(Voluntario).all()
+    voluntarios_por_comuna = {}
+    for voluntario in voluntariosTotales:
+        comuna = voluntario.comuna.nombre
+        if comuna in voluntarios_por_comuna:
+            voluntarios_por_comuna[comuna] += 1
+        else:
+            voluntarios_por_comuna[comuna] = 1
+
+    #eje X
+    comunas = sorted(voluntarios_por_comuna.keys())
+
+    #eje Y
+    cantidadVoluntarios = []
+    for comuna in comunas:
+        cantidadVoluntarios.append(voluntarios_por_comuna[comuna])
+    
+    return jsonify({
+        "dias": dias,
+        "cantidadAvistamientos": cantidadAvistamientos,
+        "datosTorta": datosTorta,
+        "comunas": comunas,
+        "cantidadVoluntarios": cantidadVoluntarios
+    })
+
+
+#Comentarios
+@app.route('/avistamiento/<int:id>/comentarios', methods=['GET']) #int:id -> /1,/2,/3,...
+def ver_comentarios(id):
+    comentarios = db_session.query(Comentario)\
+    .filter(Comentario.avistamiento_id == id)\
+    .order_by(Comentario.fecha.desc())\
+    .all()
+
+    lista_comentarios = []
+    for comentario in comentarios:
+        lista_comentarios.append({
+            "id": comentario.id,
+            "nombre": comentario.nombre,
+            "texto": comentario.texto,
+            "fecha": comentario.fecha.strftime('%Y-%m-%d %H:%M:%S')
+        })
+    return jsonify(lista_comentarios)
+
+
+#Agregar comentario
+@app.route('/avistamiento/<int:id>/comentarios', methods=['POST'])
+def agregar_comentario(id):
+    datos = request.get_json() or {}
+    nombre = datos.get('nombre', '').strip()
+    texto = datos.get('texto', '').strip()
+
+    errores = []
+    if not nombre or len(nombre) < 3 or len(nombre) > 50:
+        errores.append("El nombre debe tener entre 3 y 50 caracteres.")
+
+    if not texto or len(texto) < 5 or len(texto) > 300:
+        errores.append("El texto del comentario debe tener entre 5 y 300 caracteres.")
+
+    if errores:
+        return jsonify({"exito": False, "errores": errores}), 400
+
+    nComentario = Comentario(
+        nombre=nombre,
+        texto=texto,
+        fecha=datetime.now(),
+        avistamiento_id=id
+    )
+
+    db_session.add(nComentario)
+    db_session.commit()
+
+    return jsonify({"exito": True, "mensaje": "Comentario agregado exitosamente."})
 
 
 if __name__ == '__main__':
     app.run(debug=True)
-    

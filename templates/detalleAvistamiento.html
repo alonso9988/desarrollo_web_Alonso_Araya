@@ -1,25 +1,44 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <title>Detalle Avistamiento</title>
+
+<style>
+    .lista-comentarios {
+        list-style: none;
+        padding: 0;
+    }
+
+    .item-comentario {
+        margin-bottom: 10px;
+        border: 1px solid #ccc;
+        padding: 10px;
+        border-radius: 5px;
+        background-color: #f9f9f9;
+    }
+
+    .texto-comentario {
+        margin: 5px 0 0 0;
+    }
+</style>    
 </head>
+
 <body>
+    {% block content %}
+
     <h2>Detalle del Avistamiento</h2>
 
     <p><b>Ave:</b> {{ avistamiento.ave.nombre }}</p>
     <p><b>Fecha y Hora:</b> {{ avistamiento.fecha_hora }}</p>
     <p><b>Lugar:</b> {{ avistamiento.lugar }}</p>
     <p><b>Descripción:</b> {{ avistamiento.descripcion or 'Sin descripción' }}</p>
-
     <hr>
-
     <p><b>Voluntario:</b> {{ avistamiento.voluntario.nombre }}</p>
     <p><b>Email:</b> {{ avistamiento.voluntario.email }}</p>
     <p><b>Teléfono:</b> {{ avistamiento.voluntario.telefono or 'No registrado' }}</p>
-
     <hr>
-
     <h3>Archivos</h3>
     {% for reg in avistamiento.registros %}
         {% set ext = reg.ruta_archivo.split('.')[-1].lower() %}
@@ -30,7 +49,39 @@
         {% endif %}
     {% endfor %}
 
-    <br><br>
-    <a href="/lista_avistamientos">Volver</a>
+        <!-- Comentarios -->
+        <hr>
+        <h3>Comentarios</h3>
+        <div 
+            id="contenedor-comentarios"> 
+        </div>
+
+        <hr>
+
+        <h4>Agregar Comentario</h4>
+        <div id="mensaje-error" style="color: rgb(223, 14, 24); display: none; margin-bottom: 10px;"></div>
+
+        <form id="formComentario">
+            <label for="nombre">Nombre:</label><br>
+            <input type="text" id="nombre" name="nombre" required minlength="3" maxlength="50"><br><br>
+
+            <label for="texto">Comentario:</label><br>
+            <textarea id="texto" name="texto" rows="3" cols="40" required minlength="5" maxlength="300"></textarea><br><br>
+
+            <button type="submit">Agregar Comentario</button>
+        </form>
+        
+        <br><br>
+        <a href="/lista_avistamientos">Volver</a>
+        
+    <script>
+        const avistamientoId = {{ avistamiento.id }};
+    </script>
+
+    <script 
+        src="{{url_for('static', filename='js/comentarios.js') }}">
+    </script>
+    {% endblock %}
+    
 </body>
 </html>

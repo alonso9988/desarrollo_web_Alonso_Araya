@@ -1,39 +1,111 @@
-//Grafico Tipo
-const tipo = document.getElementById("graficoTipo");
-const graficoTipo = tipo.getContext("2d");
+document.addEventListener("DOMContentLoaded", function() {
+    fetch('/api/estadisticas')
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('error en la api');
+            }
+            return response.json();
+        })
+        .then((data) => {
+            console.log("Datos recibidos:", data);
 
-graficoTipo.font = "14px sans-serif";
+            //Gráfico de Líneas
+            Highcharts.chart('graficoDeLineas', {
+                chart: {
+                    type: 'line',
+                    backgroundColor: '#FFFFFF'
+                },
+                title: {
+                    text: 'Cantidad de Avistamientos por Día',
+                    style: { color: '#000000', fontWeight: 'bold' }
+                },
+                xAxis: {
+                    categories: data.dias,
+                    title: { text: 'Día', style: { color: '#000000' } },
+                    labels: { style: { color: '#000000' } }
+                },
+                yAxis: {
+                    title: { text: 'Cantidad de Avistamientos', style: { color: '#000000' } },
+                    min: 0,
+                    allowDecimals: false,
+                    labels: { style: { color: '#000000' } }
+                },
+                legend: {
+                    itemStyle: { color: '#000000' }
+                },
+                series: [{
+                    name: 'Avistamientos',
+                    data: data.cantidadAvistamientos
+                }],
+                credits: { enabled: false }
+            });
 
-//Rapaces: 2
-graficoTipo.fillRect(40, 60, 40, 100);
-graficoTipo.fillText("2", 55, 50);
-graficoTipo.fillText("Rapaz", 40, 180);
+            //Gráfico de Torta
+            Highcharts.chart('graficoDeTorta', {
+                chart: {
+                    type: 'pie',
+                    backgroundColor: '#FFFFFF',
+                    plotBackgroundColor: '#FFFFFF'
+                },
+                title: {
+                    text: 'Distribución de Avistamientos por Tipo de Ave',
+                    style: { color: '#000000', fontWeight: 'bold' }
+                },
+                tooltip: {
+                    pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+                },
+                plotOptions: {
+                    pie: {
+                        allowPointSelect: true,
+                        cursor: 'pointer',
+                        dataLabels: {
+                            enabled: true,
+                            format: '<b>{point.name}</b>: {point.percentage:.1f} %',
+                            style: { color: '#000000' }
+                        }
+                    }
+                },
+                series: [{
+                    name: 'Avistamientos',
+                    colorByPoint: true,
+                    data: data.datosTorta
+                }],
+                credits: { enabled: false }
+            });
 
-//Pájaros: 1
-graficoTipo.fillRect(130, 110, 40, 50);
-graficoTipo.fillText("1", 145, 100);
-graficoTipo.fillText("Pájaro", 130, 180);
-
-//Acuáticas: 1
-graficoTipo.fillRect(220, 110, 40, 50);
-graficoTipo.fillText("1", 235, 100);
-graficoTipo.fillText("Acuát.", 220, 180);
-
-
-//Grafico Regiones
-const region = document.getElementById("graficoRegiones");
-const graficoRegiones = region.getContext("2d");
-
-graficoRegiones.font = "14px sans-serif";
-
-//Metropolitana: 2
-graficoRegiones.fillText("Metropolitana (2)", 20, 40);
-graficoRegiones.fillRect(20, 50, 180, 25);
-
-//Los Lagos: 1
-graficoRegiones.fillText("Los Lagos (1)", 20, 100);
-graficoRegiones.fillRect(20, 110, 90, 25);
-
-//Antofagasta: 1
-graficoRegiones.fillText("Antofagasta (1)", 20, 160);
-graficoRegiones.fillRect(20, 170, 90, 25);
+            //Gráfico de Barras
+            Highcharts.chart('graficoDeBarras', {
+                chart: {
+                    type: 'column',
+                    backgroundColor: '#FFFFFF',
+                    plotBackgroundColor: '#FFFFFF'
+                },
+                title: {
+                    text: 'Cantidad de Voluntarios por Comuna',
+                    style: { color: '#000000', fontWeight: 'bold' }
+                },
+                xAxis: {
+                    categories: data.comunas,
+                    title: { text: 'Comuna', style: { color: '#000000' } },
+                    labels: { style: { color: '#000000' } }
+                },
+                yAxis: {
+                    title: { text: 'Cantidad', style: { color: '#000000' } },
+                    min: 0,
+                    allowDecimals: false,
+                    labels: { style: { color: '#000000' } }
+                },
+                legend: {
+                    itemStyle: { color: '#000000' }
+                },
+                series: [{
+                    name: 'Voluntarios',
+                    data: data.cantidadVoluntarios
+                }],
+                credits: { enabled: false }
+            });
+        })
+        .catch(error => {
+            console.error("Error al consultar las estadísticas:", error);
+        });
+});
