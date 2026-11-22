@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+   <div id="buscador-wrapper" style="position: relative; max-width: 400px; margin: 12px auto;">
+    <form id="form-buscador" action="/lista_avistamientos" method="GET" style="display: flex;">
+        <input type="text" id="input-buscador" name="q" aria-label="Buscar avistamiento"
+               placeholder="Buscar ave, comuna o voluntario..." autocomplete="off"
+               style="flex: 1; padding: 6px 10px; font-size: 13px;">
+        <button type="submit" style="padding: 6px 12px; font-size: 13px;">Buscar</button>
+    </form>
+
+    <div id="resultados-buscador"
+         style="display: none; position: absolute; top: 100%; left: 0; right: 0; max-height: 220px; overflow-y: auto; background: white; border: 1px solid #ccc; border-top: none; z-index: 1000;">
+    </div>
+</div>
+</body>
+</html>
