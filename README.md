@@ -1,7 +1,9 @@
 # Tarea 4 
 
 -Se usaron dos servidores, Flask para todo lo integrado en las anteriores tareas, y springboot para las funciones nuevas.
+
 -Debido a que se usaron los templates de las tareas anteriores con jinja2, no se migro todo a java con thymeleaf.
+
 -Se corren ambos servidores en puertos diferentes en diferentes terminales.
 
 
